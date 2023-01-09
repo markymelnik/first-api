@@ -3,37 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <script>
-
-    let body = document.querySelector('body');
-
-    let container = document.createElement('container');
-  
-    const button = document.createElement('button');
-    button.textContent = 'Click me!';
-
-    let img = document.createElement('img');
-    img.src = '#';
-
-    container.append(button, img);
-    body.append(container);
-    
-
-    button.addEventListener('click', () => {
-
-      const img = document.querySelector('img');
-    
-      fetch('https://api.giphy.com/v1/gifs/translate?api_key=6KBgsLuVDLq1TUUDKcwJ7vt3JO3DmKvT&s=cats', {mode:'cors'})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(response) {
-          img.src = response.data.images.original.url;
-        });
-    })
-
-  </script>
+  <div class="container"></div>
+  <script src="script.js"></script>
 </body>
 </html>
