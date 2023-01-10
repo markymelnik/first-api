@@ -30,10 +30,10 @@ errorMsg.innerHTML = '';
 
 container.append(title, form, btn, img, errorMsg);
 
-form.addEventListener('submit', generateGIF); // Press Enter key
-btn.addEventListener('click', generateGIF); // Press Submit button
+form.addEventListener('submit', displayGIF); // Press Enter key
+btn.addEventListener('click', displayGIF); // Press Submit button
 
-function generateGIF(element) {
+function displayGIF(element) {
 
   const search = document.querySelector('#search');
   const img = document.querySelector('img');
@@ -48,20 +48,19 @@ function generateGIF(element) {
 	element.preventDefault();
   search.value = '';
 
-	fetch(
-		'https://api.giphy.com/v1/gifs/translate?api_key=6KBgsLuVDLq1TUUDKcwJ7vt3JO3DmKvT&s='+searchValue,
-		{ mode: 'cors' }
-	)
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (response) {
-			img.src = response.data.images.original.url;
+  getGIF();
+
+  async function getGIF() {
+    try {
+      const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=6KBgsLuVDLq1TUUDKcwJ7vt3JO3DmKvT&s='+searchValue,
+		  { mode: 'cors' });
+      const gifData = await response.json();
+		  img.src = gifData.data.images.original.url;
       errorMsg.innerHTML = '';
-		})
-    .catch(function(err) {
+    } catch (err) {
       console.log(err);
       img.src = '';
       errorMsg.innerHTML = 'Invalid input. Try again!';
-    });
-};
+    }
+  }
+}
